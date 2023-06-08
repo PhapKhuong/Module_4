@@ -2,7 +2,6 @@ package com.forex.controller;
 
 import com.forex.model.Money;
 import com.forex.service.IMoneyService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +10,12 @@ import java.util.List;
 
 @Controller
 public class Forex {
-    @Autowired
+
     private IMoneyService moneyService;
+
+    public Forex(IMoneyService moneyService) {
+        this.moneyService = moneyService;
+    }
 
     @GetMapping("/forex")
     public String showList(Model model) {
