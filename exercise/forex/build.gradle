@@ -20,7 +20,6 @@ dependencies {
     implementation group: 'org.springframework', name: 'spring-webmvc', version: '4.3.17.RELEASE'
 
     implementation group: 'javax.servlet', name: 'jstl', version: '1.2'
-
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
 }
 
