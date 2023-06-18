@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List of song</title>
+</head>
+<body>
+<a th:href="@{/music/add}">Thêm mới bài hát</a>
+<h3>Danh sách bài hát</h3>
+<table>
+    <tr>
+        <th>STT</th>
+        <th>Tên bài hát</th>
+        <th>Ca sĩ</th>
+        <th>Thể loại</th>
+        <th>Play</th>
+    </tr>
+    <tr th:each="song, status : ${songs}">
+        <td th:text="${status.count}"></td>
+        <td th:text="${song.name}"></td>
+        <td th:text="${song.singer}"></td>
+        <td th:text="${song.getMusicType().getType()}"></td>
+        <td th:text="${song.file}"></td>
+    </tr>
+</table>
+</body>
+</html>

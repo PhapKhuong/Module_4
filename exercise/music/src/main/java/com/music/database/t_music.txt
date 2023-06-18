@@ -1,0 +1,22 @@
+create table music_type
+(
+    typeId int primary key,
+    type   varchar(45)
+);
+
+create table song
+(
+    sId    int primary key,
+    name   varchar(100),
+    singer varchar(45),
+    typeId int,
+    file   longblob,
+    foreign key (typeId) references music_type (typeId)
+);
+
+insert into music_type (typeId, type)
+values (1, 'Pop'),
+       (2, 'Rock'),
+       (3, 'Jazz'),
+       (4, 'Blues'),
+       (5, 'R&B');
