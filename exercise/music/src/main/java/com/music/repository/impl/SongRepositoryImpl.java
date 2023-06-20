@@ -5,26 +5,28 @@ import com.music.database.MyQuery;
 import com.music.model.MusicType;
 import com.music.model.Song;
 import com.music.repository.itf.ISongRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class SongRepositoryImpl implements ISongRepository {
+    @Value("${file-upload}")
+    private String fileUpload;
 
     @Override
-    public List<Song> showList() {
+    public Map<Song, String> showList() {
         Connection connection = DBConnection.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        List<Song> songs = new ArrayList<>();
+
+        Map<Song, String> songMap = new HashMap<>();
 
         if (connection != null) {
             try {
@@ -40,9 +42,13 @@ public class SongRepositoryImpl implements ISongRepository {
                     MusicType musicType = new MusicType(typeId, type);
 
                     Blob blob = resultSet.getBlob("file");
-                    InputStream inputStream = blob.getBinaryStream();
-                    Files.copy(inputStream, Paths.get("Download"+name));
+                    byte[] byteArr = blob.getBytes(1, (int) blob.length());
+                    File file = new File(fileUpload + name + ".mp4");
+                    FileCopyUtils.copy(byteArr, file);
+                    String path = "/download/" + name + ".mp4";
 
+                    Song song = new Song(sId, name, singer, musicType);
+                    songMap.put(song, path);
                 }
             } catch (SQLException | IOException e) {
                 e.printStackTrace();
@@ -56,7 +62,7 @@ public class SongRepositoryImpl implements ISongRepository {
                 DBConnection.close();
             }
         }
-        return songs;
+        return songMap;
     }
 
     @Override

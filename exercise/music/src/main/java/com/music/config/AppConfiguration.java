@@ -38,7 +38,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
-        templateResolver.setPrefix("/WEB-INF/views/music");
+        templateResolver.setPrefix("/WEB-INF/views/music/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCharacterEncoding("UTF-8");
@@ -65,7 +65,8 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/upload/**")
                 .addResourceLocations("file:" + fileUpload);
-
+        registry.addResourceHandler("/download/**")
+                .addResourceLocations("/download/");
     }
 
     @Bean(name = "multipartResolver")

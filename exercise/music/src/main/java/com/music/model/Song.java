@@ -12,6 +12,13 @@ public class Song {
     public Song() {
     }
 
+    public Song(int sId, String name, String singer, MusicType musicType) {
+        this.sId = sId;
+        this.name = name;
+        this.singer = singer;
+        this.musicType = musicType;
+    }
+
     public Song(int sId, String name, String singer, MusicType musicType, MultipartFile file) {
         this.sId = sId;
         this.name = name;

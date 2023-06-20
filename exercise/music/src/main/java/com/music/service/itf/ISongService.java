@@ -2,10 +2,10 @@ package com.music.service.itf;
 
 import com.music.model.Song;
 
-import java.util.List;
+import java.util.Map;
 
 public interface ISongService {
-    List<Song> showList();
+    Map<Song, String> showList();
 
     void add(Song song);
 }

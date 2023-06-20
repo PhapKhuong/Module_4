@@ -2,10 +2,10 @@ package com.music.repository.itf;
 
 import com.music.model.Song;
 
-import java.util.List;
+import java.util.Map;
 
 public interface ISongRepository {
-    List<Song> showList();
+    Map<Song, String> showList();
 
     void add(Song song);
 }

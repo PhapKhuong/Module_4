@@ -15,12 +15,16 @@
         <th>Thể loại</th>
         <th>Play</th>
     </tr>
-    <tr th:each="song, status : ${songs}">
+    <tr th:each="song, status : ${songMap}">
         <td th:text="${status.count}"></td>
-        <td th:text="${song.name}"></td>
-        <td th:text="${song.singer}"></td>
-        <td th:text="${song.getMusicType().getType()}"></td>
-        <td th:text="${song.file}"></td>
+        <td th:text="${song.getKey().name}"></td>
+        <td th:text="${song.getKey().singer}"></td>
+        <td th:text="${song.getKey().musicType.type}"></td>
+        <td>
+            <video controls>
+                <source th:src="@{${song.getValue()}}">
+            </video>
+        </td>
     </tr>
 </table>
 </body>

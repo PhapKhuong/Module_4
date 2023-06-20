@@ -5,6 +5,7 @@
     <title>Add new song</title>
 </head>
 <body>
+<h3 th:if="${error!=null}" th:text="${error}"></h3>
 <form th:object="${song}" th:action="@{/music/add}" th:method="post" novalidate="novalidate"
       enctype="multipart/form-data">
     <table>
@@ -29,9 +30,9 @@
         <tr>
             <td>Music type</td>
             <td>
-                <select th:field="*{musicType}">
+                <select th:field="*{musicType.typeId}">
                     <option th:each="musicType : ${musicTypes}"
-                            th:value="${musicType}"
+                            th:value="${musicType.getTypeId()}"
                             th:text="${musicType.getType()}">
                     </option>
                 </select>

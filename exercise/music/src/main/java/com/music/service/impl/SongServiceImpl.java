@@ -5,7 +5,7 @@ import com.music.repository.itf.ISongRepository;
 import com.music.service.itf.ISongService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Map;
 
 @Service
 public class SongServiceImpl implements ISongService {
@@ -16,8 +16,8 @@ public class SongServiceImpl implements ISongService {
     }
 
     @Override
-    public List<Song> showList() {
-        return null;
+    public Map<Song, String> showList() {
+        return repository.showList();
     }
 
     @Override
