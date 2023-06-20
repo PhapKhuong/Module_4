@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Thêm mới sản phẩm</h1>
+    <h3 th:if="${error!=null}" th:text="${error}"></h3>
+    <form th:object="${product}" th:action="@{/product/add}" method="post">
+        <table class="table">
+            <tbody>
+            <tr class="col">
+                <td>ID</td>
+                <td>
+                    <input type="number" th:field="*{id}">
+                </td>
+            </tr>
+
+            <tr class="col">
+                <td>Name</td>
+                <td>
+                    <input type="text" th:field="*{name}">
+                </td>
+            </tr>
+
+            <tr class="col">
+                <td>Origin</td>
+                <td>
+                    <input type="text" th:field="*{origin}">
+                </td>
+            </tr>
+
+            <tr class="col">
+                <td>Price</td>
+                <td>
+                    <input type="number" th:field="*{price}">
+                </td>
+            </tr>
+
+            <tr class="col">
+                <td></td>
+                <td>
+                    <input type="submit" value="Save">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+</body>
+<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/js/product.js}"></script>
+</html>

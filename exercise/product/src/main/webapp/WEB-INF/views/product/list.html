@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List of product</title>
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Danh sách sản phẩm</h1>
+    <a th:href="@{/product/add}">Thêm mới sản phẩm</a>
+    <table class="table">
+        <thread>
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Origin</th>
+                <th scope="col">Price</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thread>
+        <tbody>
+        <tr class="col" th:each="p, status : ${products}">
+            <td th:text="${status.count}"></td>
+            <td th:text="${p.id}"></td>
+            <td th:text="${p.name}"></td>
+            <td th:text="${p.origin}"></td>
+            <td th:text="${p.price}"></td>
+            <td>
+                <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#delProductModal"
+                        th:data-bs-id="${p.id}">
+                    Delete
+                </button>
+            </td>
+            <td>
+                <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editProductModal"
+                        th:data-bs-id="${p.id}"
+                        th:data-bs-name="${p.name}"
+                        th:data-bs-origin="${p.origin}"
+                        th:data-bs-price="${p.price}">
+                    Edit
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!--MODAL DELETE PRODUCT-->
+    <div class="modal fade"
+         id="delProductModal"
+         tabindex="-1"
+         aria-labelledby="delProductModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="delProductModalLabel">Xóa sản phẩm</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${product}" th:action="@{/product/delete}" method="post">
+                        <div class="mb-3">
+                            <input type="number" class="form-control" th:field="${product.id}" th:id="delId"
+                                   readonly/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <input type="submit" class="btn btn-secondary" value="OK">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--MODAL DELETE PRODUCT END-->
+
+
+
+    <!--MODAL EDIT PRODUCT-->
+    <div class="modal fade"
+         id="editProductModal"
+         tabindex="-1"
+         aria-labelledby="editProductModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProductModalLabel">Sửa thông tin sản phẩm</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${product}" th:action="@{/product/update}" method="post">
+                        <div class="mb-3">
+                            <label th:for="newId" class="col-form-label">ID:</label>
+                            <input type="number" class="form-control" th:field="${product.id}" th:id="newId"
+                                   readonly/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="newName" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" th:field="${product.name}" th:id="newName"/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="newOrigin" class="col-form-label">Origin:</label>
+                            <input type="text" class="form-control" th:field="${product.origin}" th:id="newOrigin"/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="newPrice" class="col-form-label">Price:</label>
+                            <input type="number" class="form-control" th:field="${product.price}" th:id="newPrice"/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <input type="submit" class="btn btn-secondary" value="OK">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--MODAL DELETE PRODUCT END-->
+
+
+</div>
+</body>
+<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/js/product.js}"></script>
+</html>
