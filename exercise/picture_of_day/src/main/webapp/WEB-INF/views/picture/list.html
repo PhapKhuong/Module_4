@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Picture of the day</title>
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <img id="img-of-the-day"/>
+    <h3 th:if="${error!=null}" th:text="${error}"></h3>
+    <div>
+        <form th:object="${feedback}" th:action="@{/picture-of-day/add}" method="post">
+            <table class="table">
+                <tbody>
+                <tr class="col">
+                    <td></td>
+                    <td>
+                        <select th:field="*{point}">
+                            <option th:value="1" th:text="1"></option>
+                            <option th:value="2" th:text="2"></option>
+                            <option th:value="3" th:text="3"></option>
+                            <option th:value="4" th:text="4"></option>
+                            <option th:value="5" th:text="5"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="col">
+                    <td>Author</td>
+                    <td><input th:type="text" th:field="*{author}"/></td>
+                </tr>
+                <tr class="col">
+                    <td>Feedback</td>
+                    <td><input th:type="text" th:field="*{content}"/></td>
+                </tr>
+                <tr class="col">
+                    <td><input type="hidden" th:field="*{initDate}" th:value="${#dates.createNow()}"/></td>
+                    <td><input type="submit" value="Send"></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+    <div>
+        <h3>List of feedback</h3>
+        <table class="table">
+            <tbody>
+            <tr class="col" th:each="f : ${feedbacks}">
+                <td th:text="${f.point}"></td>
+                <td th:text="${f.content}"></td>
+                <td th:text="${f.like}">likes</td>
+                <td>
+                    <form th:object="${feedback}" th:action="@{/picture-of-day/update}" method="post">
+                        <input type="hidden" th:field="*{fbId}" th:value="${f.fbId}">
+                        <input type="submit" value="Like">
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/js/picture.js}"></script>
+</html>

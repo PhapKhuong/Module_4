@@ -63,6 +63,4 @@ public class ProductController {
         service.update(product.getId(), product);
         return "redirect:/product/list";
     }
-
-
 }

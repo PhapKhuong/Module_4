@@ -1,0 +1,28 @@
+.header {
+    text-align: center;
+    align-content: center;
+    width: 100%
+}
+
+.full {
+    width: 100%;
+}
+
+.divide {
+    width: 33.33%;
+    float: left;
+}
+
+.half {
+    width: 50%;
+    float: left;
+}
+
+.red {
+    color: red;
+    font-style: italic;
+}
+
+span {
+    font-weight: bold;
+}
