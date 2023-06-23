@@ -1,19 +1,21 @@
 package com.picture.model;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
+@Table (name = "fb")
 public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fbId;
-    private int point;
+    private int rate;
     private String author;
     private String content;
-    private Date initDate;
-    private int like;
+    private String initDate;
+    @ColumnDefault("0")
+    private int liked;
 
     public Feedback() {
     }
@@ -22,20 +24,20 @@ public class Feedback {
         this.fbId = fbId;
     }
 
-    public Feedback(int point, String author, String content, Date initDate) {
-        this.point = point;
+    public Feedback(int rate, String author, String content, String initDate) {
+        this.rate = rate;
         this.author = author;
         this.content = content;
         this.initDate = initDate;
     }
 
-    public Feedback(int fbId, int point, String author, String content, Date initDate, int like) {
+    public Feedback(int fbId, int rate, String author, String content, String initDate, int liked) {
         this.fbId = fbId;
-        this.point = point;
+        this.rate = rate;
         this.author = author;
         this.content = content;
         this.initDate = initDate;
-        this.like = like;
+        this.liked = liked;
     }
 
     public int getFbId() {
@@ -46,12 +48,12 @@ public class Feedback {
         this.fbId = fbId;
     }
 
-    public int getPoint() {
-        return point;
+    public int getRate() {
+        return rate;
     }
 
-    public void setPoint(int point) {
-        this.point = point;
+    public void setRate(int point) {
+        this.rate = point;
     }
 
     public String getAuthor() {
@@ -70,19 +72,19 @@ public class Feedback {
         this.content = content;
     }
 
-    public Date getInitDate() {
+    public String getInitDate() {
         return initDate;
     }
 
-    public void setInitDate(Date initDate) {
+    public void setInitDate(String initDate) {
         this.initDate = initDate;
     }
 
-    public int getLike() {
-        return like;
+    public int getLiked() {
+        return liked;
     }
 
-    public void setLike(int like) {
-        this.like = like;
+    public void setLiked(int like) {
+        this.liked = like;
     }
 }

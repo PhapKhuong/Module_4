@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -30,17 +29,19 @@ public class PictureRepositoryImpl implements IPictureRepository {
     }
 
     public List<Feedback> find() {
-        List<Feedback> feedbacks = new ArrayList<>();
+        List<Feedback> feedbacks;
         TypedQuery<Feedback> query =
                 (TypedQuery<Feedback>) entityManager.createNativeQuery(PictureQuery.FIND_BY_DATE, Feedback.class);
+        feedbacks = query.getResultList();
         return feedbacks;
     }
 
+    @Transactional
     @Override
     public void update(int id) {
         Feedback feedback = findById(id);
-        int newLike = feedback.getLike() + 1;
-        feedback.setLike(newLike);
+        int newLike = feedback.getLiked() + 1;
+        feedback.setLiked(newLike);
         entityManager.merge(feedback);
     }
 

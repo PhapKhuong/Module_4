@@ -34,18 +34,18 @@ public class PictureController {
 
     @PostMapping("/add")
     public String add(@ModelAttribute Feedback feedback, Model model) {
-        if (service.add(feedback)) {
-            return "list";
-        } else {
+        if (!service.add(feedback)) {
             String errorMsg = "Adding new failed!";
             model.addAttribute("error", errorMsg);
             return "list";
         }
+        return "redirect:/picture-of-day";
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute Feedback feedback, Model model) {
-        service.update(feedback.getFbId());
+    public String update(@ModelAttribute Feedback feedback) {
+        int id = feedback.getFbId();
+        service.update(id);
         return "redirect:/picture-of-day";
     }
 }

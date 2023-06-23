@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Picture of the day</title>
     <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/picture.css}">
 </head>
 <body>
 <div class="container">
@@ -16,7 +17,7 @@
                 <tr class="col">
                     <td></td>
                     <td>
-                        <select th:field="*{point}">
+                        <select th:field="*{rate}">
                             <option th:value="1" th:text="1"></option>
                             <option th:value="2" th:text="2"></option>
                             <option th:value="3" th:text="3"></option>
@@ -34,7 +35,8 @@
                     <td><input th:type="text" th:field="*{content}"/></td>
                 </tr>
                 <tr class="col">
-                    <td><input type="hidden" th:field="*{initDate}" th:value="${#dates.createNow()}"/></td>
+                    <td><input type="hidden" th:id="initDate" th:name="initDate"
+                               th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/></td>
                     <td><input type="submit" value="Send"></td>
                 </tr>
                 </tbody>
@@ -47,13 +49,13 @@
         <table class="table">
             <tbody>
             <tr class="col" th:each="f : ${feedbacks}">
-                <td th:text="${f.point}"></td>
+                <td th:text="${f.rate}"></td>
                 <td th:text="${f.content}"></td>
-                <td th:text="${f.like}">likes</td>
+                <td th:text="|${f.liked} likes|"></td>
                 <td>
                     <form th:object="${feedback}" th:action="@{/picture-of-day/update}" method="post">
-                        <input type="hidden" th:field="*{fbId}" th:value="${f.fbId}">
-                        <input type="submit" value="Like">
+                        <input type="hidden" th:id="fbId" th:name="fbId" th:value="${f.fbId}"/>
+                        <input type="submit" value="Like"/>
                     </form>
                 </td>
             </tr>
