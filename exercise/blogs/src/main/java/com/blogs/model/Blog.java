@@ -1,6 +1,7 @@
 package com.blogs.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class Blog {
@@ -10,22 +11,33 @@ public class Blog {
     private String title;
     @Column(columnDefinition = "text")
     private String content;
-    private String date;
+    private LocalDate date;
+
+    @ManyToOne
+    @JoinColumn(name = "category_Id", referencedColumnName = "categoryId")
+    private Category category;
 
     public Blog() {
     }
 
-    public Blog(String title, String content, String date) {
+    public Blog(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    public Blog(String title, String content, LocalDate date, Category category) {
         this.title = title;
         this.content = content;
         this.date = date;
+        this.category = category;
     }
 
-    public Blog(int id, String title, String content, String date) {
+    public Blog(int id, String title, String content, LocalDate date, Category category) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.date = date;
+        this.category = category;
     }
 
     public int getId() {
@@ -52,11 +64,19 @@ public class Blog {
         this.content = content;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
