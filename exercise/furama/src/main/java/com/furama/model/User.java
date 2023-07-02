@@ -12,8 +12,13 @@ public class User {
 
     private String password;
 
-    @OneToMany(mappedBy = "user ")
+    @OneToMany(mappedBy = "user")
     private Set<Employee> employeeSet;
+
+    @OneToMany(mappedBy = "user")
+    private Set<UserRole> userRoleSet;
+
+
 
     public User() {
     }

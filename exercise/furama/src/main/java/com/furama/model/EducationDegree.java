@@ -7,7 +7,6 @@ import java.util.Set;
 public class EducationDegree {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "education_degree_id")
     private int educationDegreeId;
 
     @Column(name = "education_degree_name")

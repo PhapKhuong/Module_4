@@ -7,7 +7,6 @@ import java.util.Set;
 public class Division {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "division_id")
     private int divisionId;
 
     @Column(name = "division_name")

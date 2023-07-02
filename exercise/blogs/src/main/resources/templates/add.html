@@ -36,41 +36,6 @@
             <input type="submit" name="action" class="btn btn-success" value="Save">
         </div>
     </form>
-
-
-    <div class="modal fade"
-         id="creatModal"
-         tabindex="-1"
-         aria-labelledby="creatModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="creatModalLabel">Create</h5>
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close">
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form th:object="${category}" th:action="@{/blog/add}" method="post">
-                        <div class="mb-3">
-                            <input type="text" class="form-control" th:field="${category.categoryName}"/>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                Close
-                            </button>
-                            <input type="submit" class="btn btn-secondary" value="OK">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 </div>
 </body>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
