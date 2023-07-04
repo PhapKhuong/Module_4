@@ -1,20 +1,20 @@
-package com.furama.model;
+package com.furama.model.key;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
-public class UserRoleKey implements Serializable {
+public class KeyUserRole implements Serializable {
     private String username;
 
     @Column(name = "role_id")
     private int roleId;
 
-    public UserRoleKey() {
+    public KeyUserRole() {
     }
 
-    public UserRoleKey(String username, int roleId) {
+    public KeyUserRole(String username, int roleId) {
         this.username = username;
         this.roleId = roleId;
     }

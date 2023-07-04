@@ -12,6 +12,10 @@
             <label th:for="categoryName" class="col-form-label">Name:</label>
             <input type="text" class="form-control"
                    th:field="*{categoryName}" th:id="categoryName"/>
+            <input type="hidden" class="form-control" name="title"
+                   th:value="${blog.title}">
+            <input type="hidden" class="form-control" name="content"
+                   th:value="${blog.content}">
         </div>
 
         <div class="modal-footer">

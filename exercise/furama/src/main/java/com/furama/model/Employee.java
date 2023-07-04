@@ -2,6 +2,7 @@ package com.furama.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 public class Employee {
@@ -46,10 +47,13 @@ public class Employee {
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
 
+    @OneToMany(mappedBy = "employee")
+    private Set<Contract> contractSet;
+
     public Employee() {
     }
 
-    public Employee(int employeeId, String employeeName, LocalDate employeeBirthday, String employeeIdCard, double employeeSalary, String employeePhone, String employeeEmail, String employeeAddress, Position position, EducationDegree educationDegree, Division division, User user) {
+    public Employee(int employeeId, String employeeName, LocalDate employeeBirthday, String employeeIdCard, double employeeSalary, String employeePhone, String employeeEmail, String employeeAddress, Position position, EducationDegree educationDegree, Division division, User user, Set<Contract> contractSet) {
         this.employeeId = employeeId;
         this.employeeName = employeeName;
         this.employeeBirthday = employeeBirthday;
@@ -62,6 +66,7 @@ public class Employee {
         this.educationDegree = educationDegree;
         this.division = division;
         this.user = user;
+        this.contractSet = contractSet;
     }
 
     public int getEmployeeId() {
@@ -158,5 +163,13 @@ public class Employee {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<Contract> getContractSet() {
+        return contractSet;
+    }
+
+    public void setContractSet(Set<Contract> contractSet) {
+        this.contractSet = contractSet;
     }
 }

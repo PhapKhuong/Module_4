@@ -18,15 +18,14 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<UserRole> userRoleSet;
 
-
-
     public User() {
     }
 
-    public User(String username, String password, Set<Employee> employeeSet) {
+    public User(String username, String password, Set<Employee> employeeSet, Set<UserRole> userRoleSet) {
         this.username = username;
         this.password = password;
         this.employeeSet = employeeSet;
+        this.userRoleSet = userRoleSet;
     }
 
     public String getUsername() {
@@ -51,5 +50,13 @@ public class User {
 
     public void setEmployeeSet(Set<Employee> employeeSet) {
         this.employeeSet = employeeSet;
+    }
+
+    public Set<UserRole> getUserRoleSet() {
+        return userRoleSet;
+    }
+
+    public void setUserRoleSet(Set<UserRole> userRoleSet) {
+        this.userRoleSet = userRoleSet;
     }
 }

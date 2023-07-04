@@ -11,7 +11,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface IBlogRepository extends JpaRepository<Blog, Integer> {
-    Blog findBlogByTitleContaining(String str);
 
     @Query(value = BlogQuery.SELECT_ALL_BLOG, nativeQuery = true)
     Page<Blog> findAllBlogPage(Pageable pageable);
@@ -26,5 +25,5 @@ public interface IBlogRepository extends JpaRepository<Blog, Integer> {
     List<Blog> findBlogListByCategory(@Param("blog.category_id") int categoryId);
 
     @Query(value = BlogQuery.SELECT_BLOG_BY_CATEGORY, nativeQuery = true)
-    Page<Blog> findBlogPageByCategory(Pageable pageable,@Param("blog.category_id") int categoryId);
+    Page<Blog> findBlogPageByCategory(Pageable pageable, @Param("blog.category_id") int categoryId);
 }
