@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <div th:object="${user}">
+        <div class="mb-3">
+            <label class="col-form-label"><b>Username:</b></label>
+            <p th:text="${user.username}"></p>
+        </div>
+        <div class="mb-3">
+            <label class="col-form-label"><b>Full name:</b></label>
+            <p th:text="|${user.firstName} ${user.lastName}|"></p>
+        </div>
+
+        <div class="mb-3">
+            <label class="col-form-label"><b>Age:</b></label>
+            <p th:text="${user.age}"></p>
+        </div>
+
+        <div class="mb-3">
+            <label class="col-form-label"><b>Phone:</b></label>
+            <p th:text="${user.phone}"></p>
+        </div>
+        <div class="mb-3">
+            <label class="col-form-label"><b>Email:</b></label>
+            <p th:text="${user.email}"></p>
+        </div>
+    </div>
+</div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>

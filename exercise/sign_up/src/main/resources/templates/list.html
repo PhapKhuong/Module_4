@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <h3>List of User</h3>
+    <a th:href="@{/user/add}">Sign up</a>
+    <table class="table">
+        <thread>
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Username</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col"></th>
+            </tr>
+        </thread>
+        <tbody>
+        <tr class="col" th:each="user, status : ${userPage}">
+            <td th:text="${status.count}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.phone}"></td>
+            <td th:text="${user.email}"></td>
+            <td>
+                <a th:href="@{/user/detail(username=${user.username})}">Detail</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <a th:if="${userPage.hasPrevious()}"
+           th:href="@{/user/list(page=${userPage.number - 1})}">Previous</a>
+        <span th:text="|page ${userPage.number+1} / ${userPage.totalPages}|"></span>
+        <a th:if="${userPage.hasNext()}"
+           th:href="@{/user/list(page=${userPage.number + 1})}">Next</a>
+    </div>
+</div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>
