@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>List of student</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <div th:replace="~{library/layout::menu}"></div>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+                <form class="d-flex" th:action="@{/library/student}">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                           th:name="studentName" th:value="${studentName}"/>
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <h3>List of student</h3>
+    <button
+            type="button"
+            class="btn btn-outline-success btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#addStudentModal">
+        Add new student
+    </button>
+    <table class="table">
+        <thread>
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Student ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Grade</th>
+                <th scope="col"></th>
+            </tr>
+        </thread>
+        <tbody>
+        <tr class="col" th:each="student, status : ${studentPage}">
+            <td th:text="${status.count}"></td>
+            <td th:text="${student.studentId}"></td>
+            <td th:text="${student.studentName}"></td>
+            <td th:text="${student.grade}"></td>
+            <td>
+                <button
+                        type="button"
+                        class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editStudentModal"
+                        th:data-bs-studentId="${student.studentId}"
+                        th:data-bs-studentName="${student.studentName}"
+                        th:data-bs-grade="${student.grade}">
+                    Edit
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <a th:if="${studentPage.hasPrevious()}"
+           th:href="@{/library/student(page=${studentPage.number - 1}, studentName=${studentName})}">Previous</a>
+        <span th:text="|page ${studentPage.number+1} / ${studentPage.totalPages}|"></span>
+        <a th:if="${studentPage.hasNext()}"
+           th:href="@{/library/student(page=${studentPage.number + 1}, studentName=${studentName})}">Next</a>
+    </div>
+    <div th:replace="~{library/modalAddStudent::addStudent}"></div>
+    <div th:replace="~{library/modalEditStudent::editStudent}"></div>
+
+</div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/student.js}"></script>
+</html>

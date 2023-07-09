@@ -8,26 +8,26 @@ import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
 public class LocalDateFormatter implements Formatter<LocalDate> {
-    private String pattern;
-    private DateTimeFormatter formatter;
+    private String datePattern;
+    private DateTimeFormatter dateFormatter;
 
     public LocalDateFormatter(String datePattern) {
-        this.pattern = datePattern;
-        this.formatter = DateTimeFormatter.ofPattern(datePattern);
+        this.datePattern = datePattern;
+        this.dateFormatter = DateTimeFormatter.ofPattern(datePattern);
     }
 
-    public String getPattern() {
-        return pattern;
+    public String getDatePattern() {
+        return datePattern;
     }
 
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
+    public void setDatePattern(String datePattern) {
+        this.datePattern = datePattern;
     }
 
     @Override
     public LocalDate parse(String dateString, Locale locale) {
         try {
-            return LocalDate.parse(dateString, DateTimeFormatter.ofPattern(pattern));
+            return LocalDate.parse(dateString, dateFormatter);
         } catch (DateTimeParseException e) {
             e.printStackTrace();
             return null;
@@ -36,6 +36,6 @@ public class LocalDateFormatter implements Formatter<LocalDate> {
 
     @Override
     public String print(LocalDate date, Locale locale) {
-        return date.format(formatter);
+        return date.format(dateFormatter);
     }
 }

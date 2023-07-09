@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>List of card</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <div th:replace="~{library/layout::menu}"></div>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+                <form class="d-flex" th:action="@{/library/card}" method="get">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                           th:name="bookName" th:value="${bookName}"/>
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <h3>List of card</h3>
+    <p th:if="${msgBorrow!=null}" th:text="${msgBorrow}"></p>
+    <p th:if="${msgReturn!=null}" th:text="${msgReturn}"></p>
+    <table class="table">
+        <thread>
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Card ID</th>
+                <th scope="col">Book name</th>
+                <th scope="col">Student name</th>
+                <th scope="col">Loan date</th>
+                <th scope="col">Return date</th>
+                <th scope="col"></th>
+            </tr>
+        </thread>
+        <tbody>
+        <tr class="col" th:each="card, status : ${cardPage}">
+            <td th:text="${status.count}"></td>
+            <td th:text="${card.cardId}"></td>
+            <td th:text="${card.book.bookName}"></td>
+            <td th:text="${card.student.studentName}"></td>
+            <td th:text="${card.loanDate}"></td>
+            <td th:text="${card.returnDate}"></td>
+            <td>
+                <button
+                        th:if="${card.status==false}"
+                        type="button"
+                        class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editCardModal"
+                        th:data-bs-cardId="${card.cardId}">
+                    Return
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <a th:if="${cardPage.hasPrevious()}"
+           th:href="@{/library/card(page=${cardPage.number - 1}, bookName=${bookName})}">Previous</a>
+        <span th:text="|page ${cardPage.number+1} / ${cardPage.totalPages}|"></span>
+        <a th:if="${cardPage.hasNext()}"
+           th:href="@{/library/card(page=${cardPage.number + 1}, bookName=${bookName})}">Next</a>
+    </div>
+
+    <div th:replace="~{library/modalEditCard::returnBook}"></div>
+</div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/card.js}"></script>
+</html>

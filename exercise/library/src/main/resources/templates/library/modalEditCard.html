@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Return book</title>
+</head>
+<body>
+<div th:fragment="returnBook">
+    <div class="modal fade"
+         id="editCardModal"
+         tabindex="-1"
+         aria-labelledby="editCardModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCardModalLabel">Return book</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${card}" th:action="@{/library/card/returnBook}" method="post">
+                        <div class="mb-3">
+                            <input type="hidden" class="form-control" th:name="cardId" th:id="cardId"
+                                   readonly/>
+                        </div>
+                        <div class="mb-3">
+                            <input type="hidden" class="form-control" th:id="returnDate" th:name="returnDate"
+                                   th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <input type="submit" class="btn btn-secondary" value="OK">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

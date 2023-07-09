@@ -1,32 +1,40 @@
 package com.library.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class Card {
-    @EmbeddedId
-    private CardKey id;
+    @Id
+    private String cardId;
 
     @ManyToOne
-    @MapsId("bookId")
-    @JoinColumn(name = "book_Id")
+    @JoinColumn(name = "book_Id", referencedColumnName = "bookId")
     private Book book;
 
     @ManyToOne
-    @MapsId("stuId")
-    @JoinColumn(name = "stu_Id")
+    @JoinColumn(name = "student_id", referencedColumnName = "studentId")
     private Student student;
 
     private boolean status;
-    private LocalDate loanDate;
-    private LocalDate returnDate;
+    private LocalDateTime loanDate;
+    private LocalDateTime returnDate;
 
     public Card() {
     }
 
-    public Card(CardKey id, Book book, Student student, boolean status, LocalDate loanDate, LocalDate returnDate) {
-        this.id = id;
+    public Card(String cardId, LocalDateTime returnDate) {
+        this.cardId = cardId;
+        this.returnDate = returnDate;
+    }
+
+    public Card(String cardId, Book book) {
+        this.cardId = cardId;
+        this.book = book;
+    }
+
+    public Card(String cardId, Book book, Student student, boolean status, LocalDateTime loanDate, LocalDateTime returnDate) {
+        this.cardId = cardId;
         this.book = book;
         this.student = student;
         this.status = status;
@@ -34,12 +42,12 @@ public class Card {
         this.returnDate = returnDate;
     }
 
-    public CardKey getId() {
-        return id;
+    public String getCardId() {
+        return cardId;
     }
 
-    public void setId(CardKey id) {
-        this.id = id;
+    public void setCardId(String cardId) {
+        this.cardId = cardId;
     }
 
     public Book getBook() {
@@ -66,19 +74,19 @@ public class Card {
         this.status = status;
     }
 
-    public LocalDate getLoanDate() {
+    public LocalDateTime getLoanDate() {
         return loanDate;
     }
 
-    public void setLoanDate(LocalDate loanDate) {
+    public void setLoanDate(LocalDateTime loanDate) {
         this.loanDate = loanDate;
     }
 
-    public LocalDate getReturnDate() {
+    public LocalDateTime getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(LocalDate returnDate) {
+    public void setReturnDate(LocalDateTime returnDate) {
         this.returnDate = returnDate;
     }
 }

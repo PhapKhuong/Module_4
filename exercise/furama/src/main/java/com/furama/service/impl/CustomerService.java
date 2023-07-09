@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerService implements ICustomerService {
-    @Autowired
     private ICustomerRepository customerRepository;
+
+    private CustomerService(ICustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
     @Override
     public Page<Customer> findAll(Pageable pageable) {
@@ -20,6 +23,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public boolean addOne(Customer customer) {
-        return false;
+        customerRepository.save(customer);
+        return true;
     }
 }

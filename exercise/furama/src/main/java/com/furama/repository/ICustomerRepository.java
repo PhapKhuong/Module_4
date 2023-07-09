@@ -10,5 +10,4 @@ import org.springframework.data.jpa.repository.Query;
 public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
     @Query(value = FQuery.SELECT_ALL_CUSTOMER, nativeQuery = true)
     Page<Customer> findCustomer(Pageable pageable);
-
 }

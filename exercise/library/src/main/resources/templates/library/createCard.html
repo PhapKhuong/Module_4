@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Create card</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <form th:object="${card}" th:action="@{/library/book/borrow}" method="post">
+        <div class="mb-3">
+            <label th:for="cardId" class="col-form-label">Card ID:</label>
+            <input type="text" class="form-control" th:name="cardId" th:id="cardId"
+                   th:value="${card.cardId}" readonly/>
+        </div>
+        <div class="mb-3">
+            <label th:for="bookId" class="col-form-label">Name of book:</label>
+            <input type="hidden" class="form-control" th:field="*{book.bookId}"
+                   th:value="${card.book.bookId}" th:text="${card.book.bookName}"/>
+        </div>
+        <div class="mb-3">
+            <label th:for="student" class="col-form-label">Student:</label>
+            <select class="btn btn-outline-primary" th:field="*{student.studentId}">
+                <option th:each="s : ${students}"
+                        th:value="${s.getStudentId()}"
+                        th:text="${s.getStudentName()}">
+                </option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label th:for="loanDate" class="col-form-label">Loan date:</label>
+            <input type="text" class="form-control" th:id="loanDate" th:name="loanDate"
+                   th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}">
+        </div>
+        <div class="mb-3">
+            <input type="hidden" class="form-control" th:name="status" th:id="status" th:value="0"/>
+        </div>
+        <div class="modal-footer">
+            <input type="submit" name="action" class="btn btn-primary btn-sm" value="Save">
+        </div>
+    </form>
+</div>
+
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>

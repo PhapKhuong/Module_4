@@ -7,8 +7,9 @@ import java.util.Set;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int stuId;
-    private String stuName;
+    private int studentId;
+    @Column(name = "student_name")
+    private String studentName;
     private String grade;
 
     @OneToMany(mappedBy = "student")
@@ -17,27 +18,27 @@ public class Student {
     public Student() {
     }
 
-    public Student(int stuId, String stuName, String grade, Set<Card> cardSet) {
-        this.stuId = stuId;
-        this.stuName = stuName;
+    public Student(int studentId, String studentName, String grade, Set<Card> cardSet) {
+        this.studentId = studentId;
+        this.studentName = studentName;
         this.grade = grade;
         this.cardSet = cardSet;
     }
 
-    public int getStuId() {
-        return stuId;
+    public int getStudentId() {
+        return studentId;
     }
 
-    public void setStuId(int stuId) {
-        this.stuId = stuId;
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
     }
 
-    public String getStuName() {
-        return stuName;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setStuName(String stuName) {
-        this.stuName = stuName;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
     public String getGrade() {
