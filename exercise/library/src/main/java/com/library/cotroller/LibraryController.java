@@ -1,5 +1,6 @@
 package com.library.cotroller;
 
+import com.library.exception.OffBookException;
 import com.library.model.Book;
 import com.library.model.Card;
 import com.library.model.Student;
@@ -104,7 +105,13 @@ public class LibraryController {
     }
 
     @PostMapping("/book/initBorrow")
-    public String initBorrowBook(@RequestParam int bookId, Model model) {
+    public String initBorrowBook(@RequestParam int bookId,
+                                 @RequestParam int quantity,
+                                 Model model) throws OffBookException {
+        if (quantity == 0) {
+            throw new OffBookException("This book is no longer available!");
+        }
+
         List<Card> cards = cardService.findAllCardList();
         List<Integer> cardIds = new LinkedList<>();
         for (Card card : cards) {
@@ -166,5 +173,8 @@ public class LibraryController {
         return "redirect:/library/card";
     }
 
-
+    @ExceptionHandler(OffBookException.class)
+    public String offBookException() {
+        return "library/offBookException";
+    }
 }
