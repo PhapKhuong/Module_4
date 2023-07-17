@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Book</title>
+</head>
+<body>
+<div th:fragment="editBook">
+    <div class="modal fade"
+         id="editBookModal"
+         tabindex="-1"
+         aria-labelledby="editBookModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editBookModalLabel">Edit information of book</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${book}" th:action="@{/library/book/update}" method="post">
+                        <div class="mb-3">
+                            <input type="hidden" class="form-control" th:field="*{bookId}" th:id="newBookId"
+                                   readonly/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="newBookName" class="col-form-label">Name of book:</label>
+                            <input type="text" class="form-control" th:field="*{bookName}" th:id="newBookName"/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="newAuthor" class="col-form-label">Author:</label>
+                            <input type="text" class="form-control" th:field="*{author}" th:id="newAuthor"/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="newDescription" class="col-form-label">Description:</label>
+                            <input type="text" class="form-control" th:field="*{description}" th:id="newDescription"/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="newQuantity" class="col-form-label">Quantity:</label>
+                            <input type="number" class="form-control" th:field="*{quantity}" th:id="newQuantity"/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <input type="submit" class="btn btn-secondary" value="OK">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

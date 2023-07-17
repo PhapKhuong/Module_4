@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Add student</title>
+</head>
+<body>
+<div th:fragment="addStudent">
+    <div class="modal fade"
+         id="addStudentModal"
+         tabindex="-1"
+         aria-labelledby="addStudentModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addStudentModalLabel">Add new student</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${student}" th:action="@{/library/student/add}" method="post">
+                        <div class="mb-3">
+                            <label th:for="studentName" class="col-form-label">Student name:</label>
+                            <input type="text" class="form-control" th:field="*{studentName}" th:id="studentName"/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="grade" class="col-form-label">grade:</label>
+                            <input type="text" class="form-control" th:field="*{grade}" th:id="grade"/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <input type="submit" class="btn btn-secondary" value="OK">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

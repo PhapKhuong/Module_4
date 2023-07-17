@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Create card</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <form th:object="${borrowBookCard}" th:action="@{/library/book/borrow}" method="post">
+        <!--        <div class="mb-3">-->
+        <!--            <label th:for="cardId" class="col-form-label">Card ID:</label>-->
+        <!--            <input type="text" class="form-control"/>-->
+        <!--        </div>-->
+        <!--        <div class="mb-3">-->
+        <!--            <label th:for="student" class="col-form-label">Student:</label>-->
+        <!--            <select class="btn btn-outline-primary">-->
+        <!--                <option th:each="s : ${students}"-->
+        <!--                        th:value="${s.getStudentId()}"-->
+        <!--                        th:text="${s.getStudentName()}">-->
+        <!--                </option>-->
+        <!--            </select>-->
+        <!--        </div>-->
+        <table class="table">
+            <thread>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">STT</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Loan date</th>
+                </tr>
+            </thread>
+            <tbody>
+            <tr class="col" th:each="b, status : ${bookList}">
+
+                <input type="hidden" th:id="*{book}" th:value="${b}"/>
+
+                <td th:text="${status.count}"></td>
+                <td th:text="${b.bookName}"></td>
+                <td th:text="${b.author}"></td>
+                <td th:text="${b.description}"></td>
+                <td>
+                    <input type="text" class="form-control" th:id="loanDate" th:name="loanDate"
+                           th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="modal-footer">
+            <input type="submit" name="action" class="btn btn-primary btn-sm" value="Save">
+        </div>
+    </form>
+</div>
+
+</body>
+<script>
+    window.onload = function () {
+        let bookListSize = document.getElementById("bookListSize").value;
+        let strBookId = "";
+        for (let i = 0; i < bookListSize; i++) {
+            strBookId += document.getElementById("" + i).value + ",";
+        }
+        document.getElementById("bookListBorrow").value = strBookId;
+        console.log(strBookId);
+    }
+</script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>

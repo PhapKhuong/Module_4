@@ -1,0 +1,19 @@
+Method duoc thuc hien: createBook;
+Lan thay doi thu: 1; vao luc: 2023-07-16T10:53:05.127.
+
+Method duoc thuc hien: borrowBook;
+Lan thay doi thu: 1; vao luc: 2023-07-16T10:54:44.351.
+
+Method duoc thuc hien: returnBook;
+Lan thay doi thu: 2; vao luc: 2023-07-16T10:55:03.762.
+
+Method duoc thuc hien: borrowBook;
+Lan thay doi thu: 3; vao luc: 2023-07-16T10:55:46.138.
+
+Method duoc thuc hien: returnBook;
+Lan thay doi thu: 4; vao luc: 2023-07-16T10:56:10.564.Method duoc thuc hien: borrowBook;
+Lan thay doi thu: 1; vao luc: 2023-07-16T11:05:56.697.
+
+Method duoc thuc hien: returnBook;
+Lan thay doi thu: 2; vao luc: 2023-07-16T11:06:06.335.
+

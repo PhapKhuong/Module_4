@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Add book</title>
+</head>
+<body>
+<div th:fragment="addBook">
+    <div class="modal fade"
+         id="addBookModal"
+         tabindex="-1"
+         aria-labelledby="addBookModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addBookModalLabel">Add new book</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${book}" th:action="@{/library/book/add}" method="post">
+                        <div class="mb-3">
+                            <label th:for="bookName" class="col-form-label">Book name:</label>
+                            <input type="text" class="form-control" th:field="*{bookName}" th:id="bookName"/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="author" class="col-form-label">Author:</label>
+                            <input type="text" class="form-control" th:field="*{author}" th:id="author"/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="description" class="col-form-label">Description:</label>
+                            <input type="text" class="form-control" th:field="*{description}" th:id="description"/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="quantity" class="col-form-label">Quantity:</label>
+                            <input type="number" class="form-control" th:field="*{quantity}" th:id="quantity"/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <input type="submit" class="btn btn-secondary" value="OK">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

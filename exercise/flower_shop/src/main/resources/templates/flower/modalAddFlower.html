@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new</title>
+</head>
+<body>
+<div th:fragment="addFlower">
+    <div class="modal fade"
+         id="addFlowerModal"
+         tabindex="-1"
+         aria-labelledby="addFlowerModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addFlowerModalLabel">Add new product</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${flowerDto}" th:action="@{/flower/shop/add}" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label th:for="flowerName" class="col-form-label">Flower name:</label>
+                            <input type="text" class="form-control" th:field="*{flowerName}" th:id="flowerName"/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="price" class="col-form-label">Price:</label>
+                            <input type="text" class="form-control" th:field="*{price}" th:id="price"/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="quantity" class="col-form-label">Quantity:</label>
+                            <input type="text" class="form-control" th:field="*{quantity}" th:id="quantity"/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="description" class="col-form-label">Description:</label>
+                            <input type="text" class="form-control" th:field="*{description}" th:id="description"/>
+                        </div>
+                        <div>
+                            <label th:for="image" class="col-form-label">Image:</label>
+                            <input type="file" class="form-control" th:field="*{image}" th:id="image"/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-success btn-sm" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <input type="submit" class="btn btn-outline-success btn-sm" value="OK">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

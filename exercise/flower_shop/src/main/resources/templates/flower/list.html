@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>List of flower</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/flower.css}">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <div th:replace="~{flower/layout::menu}"></div>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+                <form class="d-flex" th:action="@{/flower/shop}" method="get">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                           th:name="flowerName" th:value="${flowerName}"/>
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <h3>List of flower</h3>
+    <p class="success" th:if="${msg!=null}" th:text="${msg}"></p>
+    <button
+            type="button"
+            class="btn btn-outline-success btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#addFlowerModal">
+        Add new product
+    </button>
+
+    <table class="table">
+        <thread>
+            <tr>
+                <th scope="col">Image</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col">Order</th>
+                <th scope="col">Add to Cart</th>
+            </tr>
+        </thread>
+        <tbody>
+        <tr class="col" th:each="f : ${flowerPage}">
+            <form>
+                <td>
+                    <a th:href="@{/flower/shop/detail/{id}(id=${f.flowerId})}">
+                        <img class="img-list" th:src="@{${f.image}}"/>
+                    </a>
+                </td>
+                <td th:text="${f.flowerName}"></td>
+                <td th:text="${f.description}"></td>
+                <td th:text="${f.quantity}"></td>
+                <td th:text="${f.price}"></td>
+                <td>
+                    <input class="input-quantity" type="number"/>
+                </td>
+                <td>
+                    <input class="btn btn-outline-success btn-sm" type="submit" value="Add to cart"/>
+                </td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <a th:if=" ${flowerPage.hasPrevious()}
+                    "
+           th:href="@{/flower/shop(page=${flowerPage.number - 1}, flowerName=${flowerName})}">Previous</a>
+        <span th:text="|page ${flowerPage.number+1} / ${flowerPage.totalPages}|"></span>
+        <a th:if="${flowerPage.hasNext()}"
+           th:href="@{/flower/shop(page=${flowerPage.number + 1}, flowerName=${flowerName})}">Next</a>
+    </div>
+
+    <div class="col-md-4" th:if="${historyFlower!=null}">
+        <h4>Sản phẩm xem gần nhất</h4>
+        <div class="card sticky-top border-0">
+            <img th:src="@{${historyFlower.getImage()}}" class="card-img-top img-cookie">
+            <div class="card-body">
+                <h5 class="card-title" th:text="|Name: ${historyFlower.getFlowerName()}|"></h5>
+                <strong class="card-text" th:text="|Price: ${historyFlower.getPrice()}|"></strong>
+                <p class="card-text" th:text="|Description: ${historyFlower.getDescription()}|"></p>
+                <p class="card-text" th:text="|Quantity: ${historyFlower.getQuantity()}|"></p>
+            </div>
+        </div>
+    </div>
+
+
+    <div th:replace="~{flower/modalAddFlower::addFlower}"></div>
+</div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>
