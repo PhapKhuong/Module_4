@@ -47,7 +47,7 @@
         </thread>
         <tbody>
         <tr class="col" th:each="f : ${flowerPage}">
-            <form>
+            <form th:action="@{/flower/add-to-cart}" method="post">
                 <td>
                     <a th:href="@{/flower/shop/detail/{id}(id=${f.flowerId})}">
                         <img class="img-list" th:src="@{${f.image}}"/>
@@ -58,18 +58,19 @@
                 <td th:text="${f.quantity}"></td>
                 <td th:text="${f.price}"></td>
                 <td>
-                    <input class="input-quantity" type="number"/>
+                    <input type="hidden" name="flowerId" th:value="${f.getFlowerId()}"/>
+                    <input class="input-quantity" type="number" name="order"/>
                 </td>
                 <td>
-                    <input class="btn btn-outline-success btn-sm" type="submit" value="Add to cart"/>
+                    <input class="btn btn-outline-success btn-sm"
+                           type="submit" value="Add to cart"/>
                 </td>
             </form>
         </tr>
         </tbody>
     </table>
     <div>
-        <a th:if=" ${flowerPage.hasPrevious()}
-                    "
+        <a th:if="${flowerPage.hasPrevious()}"
            th:href="@{/flower/shop(page=${flowerPage.number - 1}, flowerName=${flowerName})}">Previous</a>
         <span th:text="|page ${flowerPage.number+1} / ${flowerPage.totalPages}|"></span>
         <a th:if="${flowerPage.hasNext()}"

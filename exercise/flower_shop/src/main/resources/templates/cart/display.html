@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/flower.css}">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <div th:replace="~{flower/layout::menu}"></div>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+                <form>
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <h3>Your cart</h3>
+    <p class="success" th:if="${msg!=null}" th:text="${msg}"></p>
+    <table class="table">
+        <thread>
+            <tr>
+                <th scope="col">Image</th>
+                <th scope="col">Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col">Value</th>
+            </tr>
+        </thread>
+        <tbody>
+        <tr class="col" th:each="c : ${cart.getFlowerMap()}">
+            <td>
+                <a>
+                    <img class="img-list" th:src="@{${c.getKey().image}}"/>
+                </a>
+            </td>
+            <td th:text="${c.getKey().flowerName}"></td>
+            <td th:text="${c.getValue()}"></td>
+            <td th:text="${c.getKey().price}"></td>
+            <td th:text="${c.getKey().price * c.getValue()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>

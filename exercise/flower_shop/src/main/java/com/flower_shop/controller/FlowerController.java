@@ -1,5 +1,6 @@
 package com.flower_shop.controller;
 
+import com.flower_shop.dto.Cart;
 import com.flower_shop.dto.FlowerDto;
 import com.flower_shop.model.Flower;
 import com.flower_shop.service.itf.IFlowerService;
@@ -23,6 +24,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/flower")
+@SessionAttributes("cart")
 public class FlowerController {
     @Value("${upload}")
     private String fileUpload;
@@ -30,11 +32,15 @@ public class FlowerController {
     @Value("${static-image}")
     private String fileDisplay;
 
-
     private IFlowerService flowerService;
 
     public FlowerController(IFlowerService flowerService) {
         this.flowerService = flowerService;
+    }
+
+    @ModelAttribute("cart")
+    public Cart initCart() {
+        return new Cart();
     }
 
     @ModelAttribute("flowerDto")
@@ -115,6 +121,19 @@ public class FlowerController {
         return "flower/detail";
     }
 
+    @PostMapping("/add-to-cart")
+    public String addToCart(@RequestParam int order,
+                            @RequestParam String flowerId,
+                            @SessionAttribute(value = "cart") Cart cart,
+                            RedirectAttributes redirectAttributes) {
+        Flower flower = flowerService.findById(flowerId);
+        if (flower != null) {
+            cart.addFlower(flower, order);
+        }
+        redirectAttributes.addFlashAttribute(
+                "msg", "Add product to cart successful!");
+        return "redirect:/cart";
+    }
 
     @ExceptionHandler(IOException.class)
     public String ioException() {
