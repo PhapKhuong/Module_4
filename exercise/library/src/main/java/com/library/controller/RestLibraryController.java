@@ -35,17 +35,17 @@ public class RestLibraryController {
         if (bookPage.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(bookPage, HttpStatus.OK);
         }
     }
 
     @GetMapping("/list/book")
-    public ResponseEntity<Page<Book>> displayBookList() {
+    public ResponseEntity<List<Book>> displayBookList() {
         List<Book> bookList = bookService.findAllBookList();
         if (bookList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(bookList, HttpStatus.OK);
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.codegym.demo_springdatajpa_a10.controller;
 
-import com.codegym.demo_springdatajpa_a10.common.AdminException;
 import com.codegym.demo_springdatajpa_a10.dto.StudentDto;
 import com.codegym.demo_springdatajpa_a10.model.Student;
 import com.codegym.demo_springdatajpa_a10.service.IServiceStudent;
@@ -35,6 +34,7 @@ public class RestStudentController {
         serviceStudent.add(student);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @DeleteMapping("")
     public ResponseEntity<?> delete(@RequestParam int id) {
         Student student = serviceStudent.findById(id);
@@ -45,6 +45,7 @@ public class RestStudentController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete2(@PathVariable int id) {
         Student student = serviceStudent.findById(id);
@@ -55,6 +56,7 @@ public class RestStudentController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
+
     @PatchMapping("")
 //    @PutMapping("")
     public ResponseEntity<?> update(@RequestParam int id,@RequestBody StudentDto studentDto) {
@@ -67,5 +69,4 @@ public class RestStudentController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
-
 }
