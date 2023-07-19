@@ -1,5 +1,7 @@
 package com.library.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -14,6 +16,7 @@ public class Book {
     private String description;
     private int quantity;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "book")
     private Set<Card> cardSet;
 

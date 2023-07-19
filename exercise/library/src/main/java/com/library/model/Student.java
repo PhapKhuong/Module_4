@@ -1,5 +1,7 @@
 package com.library.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -12,6 +14,7 @@ public class Student {
     private String studentName;
     private String grade;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "student")
     private Set<Card> cardSet;
 

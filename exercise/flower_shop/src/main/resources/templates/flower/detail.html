@@ -8,6 +8,19 @@
 </head>
 <body>
 <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <div th:replace="~{flower/layout::menu}"></div>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
     <div class="card mb-3">
         <div class="row g-0">
             <div class="col-md-4">
@@ -24,9 +37,6 @@
             </div>
         </div>
     </div>
-    <button>
-    <a th:href="@{/flower/shop}">Back to shop</a>
-    </button>
 </div>
 </body>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
