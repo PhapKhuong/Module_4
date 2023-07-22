@@ -1,6 +1,7 @@
 package com.blog_rest.controller;
 
 import com.blog_rest.dto.BlogDto;
+import com.blog_rest.dto.BlogPageSearch;
 import com.blog_rest.model.Blog;
 import com.blog_rest.model.Category;
 import com.blog_rest.service.itf.IBlogService;
@@ -14,11 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-@CrossOrigin("/")
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/blogs")
 public class BlogController {
@@ -48,22 +47,24 @@ public class BlogController {
     }
 
     @GetMapping("/blog")
-    public ResponseEntity<Page<Blog>> showBlogPage(
-            @RequestParam Optional<Integer> page,
-            @RequestParam(defaultValue = "0") int id) {
-        Pageable pageable = PageRequest.of(page.orElse(0), 3);
+    public ResponseEntity<?> showBlogPage(
+            @RequestParam int page,
+            @RequestParam int id) {
+        Pageable pageable = PageRequest.of(page, 3);
         Page<Blog> blogPage;
+        Category category;
         if (id == 0) {
             blogPage = blogService.findAll(pageable);
-
+            category = null;
         } else {
             blogPage = blogService.findByCategory(pageable, id);
-            Category category = categoryService.findOne(id);
+            category = categoryService.findOne(id);
         }
         if (blogPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(blogPage, HttpStatus.OK);
+            BlogPageSearch blogPageSearch =new BlogPageSearch(category, blogPage);
+            return new ResponseEntity<>(blogPageSearch, HttpStatus.OK);
         }
     }
 
