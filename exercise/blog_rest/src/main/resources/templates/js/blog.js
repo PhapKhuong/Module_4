@@ -2,7 +2,7 @@ showCategory();
 showBlogByCategory();
 
 function showCategory() {
-    let categoryStr = '<li id="0" onclick="showBlogs()" class="dropdown-item">All</li>';
+    let categoryStr = '<li id="0" onclick="showBlogByCategory(this.id)" class="dropdown-item">All</li>';
     $.ajax({
         contentType: "application/json",
         type: "GET",

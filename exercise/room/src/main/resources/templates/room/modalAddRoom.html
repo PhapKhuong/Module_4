@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Add room</title>
+</head>
+<body>
+<div th:fragment="addRoom">
+    <div class="modal fade"
+         id="addRoomModal"
+         tabindex="-1"
+         aria-labelledby="addRoomModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addRoomModalLabel">Add new room</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${room}" th:action="@{/room/add}" method="post">
+                        <div class="mb-3">
+                            <label th:for="roomName" class="col-form-label">Room name:</label>
+                            <input type="text" class="form-control" th:field="*{roomName}" th:id="roomName"/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="phone" class="col-form-label">Phone:</label>
+                            <input type="text" class="form-control" th:field="*{phone}" th:id="phone"/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="date" class="col-form-label">Date:</label>
+                            <input type="text" class="form-control" th:id="date" th:name="date"
+                            th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="payment" class="col-form-label">Payment:</label>
+                            <select class="btn btn-primary btn-sm" th:field="*{payment.paymentId}">
+                                <option th:each="payment : ${payments}"
+                                        th:value="${payment.getPaymentId()}"
+                                        th:text="${payment.getPaymentName()}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label th:for="note" class="col-form-label">Note:</label>
+                            <input type="text" class="form-control" th:field="*{note}" th:id="note"/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <input type="submit" class="btn btn-secondary" value="OK">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

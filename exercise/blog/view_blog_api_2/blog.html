@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of blog</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="dropdown">
+        <span><b>Category</b></span>
+        <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1"
+                data-bs-toggle="dropdown" aria-expanded="false">
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="category">
+        </ul>
+    </div>
+
+    <table class="table">
+        <thread>
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Title</th>
+                <th scope="col">Date</th>
+                <th scope="col">Category</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thread>
+        <tbody id="blogs">
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <button class="page-link" id="previous-page" onclick="showBlogByPage(this.id)">Previous</button>
+        <span class="page-link" id="current-page"></span>
+        <button class="page-link" id="page-next" onclick="showBlogByPage(this.id)">Next</button>
+    </div>
+
+</div>
+</body>
+<script src="js/jquery-3.6.1.min.js"></script>
+<script src="js/blog.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+</html>
