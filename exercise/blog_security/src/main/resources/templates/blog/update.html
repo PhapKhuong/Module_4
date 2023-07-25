@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <form th:object="${blog}" th:action="@{/blog/edit}" method="post">
+        <div class="mb-3">
+            <input type="hidden" class="form-control" th:id="id" th:name="id"
+                   th:value="${blog.id}"/>
+        </div>
+        <div class="mb-3">
+            <label th:for="title" class="col-form-label">Title:</label>
+            <input type="text" class="form-control" th:value="${blog.title}"
+                   th:id="title" th:name="title"/>
+        </div>
+        <div class="mb-3">
+            <label th:for="content" class="col-form-label">Content:</label>
+            <textarea cols="20" rows="15" class="form-control"
+                      th:field="${blog.content}" th:id="content" th:name="content"></textarea>
+        </div>
+        <div class="mb-3">
+            <label th:for="category" class="col-form-label">Category:</label>
+            <select th:field="*{category.categoryId}">
+                <option th:each="category : ${categories}"
+                        th:value="${category.getCategoryId()}"
+                        th:text="${category.getCategoryName()}"
+                        th:selected="${category.getCategoryName()}">
+                </option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <input type="hidden" class="form-control" th:id="date" th:name="date"
+                   th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
+        </div>
+        <div class="modal-footer">
+            <input type="submit" class="btn btn-secondary" value="OK">
+        </div>
+    </form>
+</div>
+
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>

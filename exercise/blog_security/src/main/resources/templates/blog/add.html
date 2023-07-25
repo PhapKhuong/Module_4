@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new blog</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <form th:object="${blog}" th:action="@{/blog/add}" method="post">
+        <div class="mb-3">
+            <label th:for="title" class="col-form-label">Title:</label>
+            <input type="text" class="form-control" th:name="title" th:id="title"
+                   th:value="${blog.title}"/>
+        </div>
+
+        <div class="mb-3">
+            <label th:for="content" class="col-form-label">Content:</label>
+            <textarea cols="20" rows="15" class="form-control"
+                      th:field="*{content}" th:value="${blog.content}"></textarea>
+        </div>
+        <div class="mb-3">
+            <input type="hidden" class="form-control" th:id="date" th:name="date"
+                   th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
+        </div>
+        <div class="mb-3">
+            <label th:for="category" class="col-form-label">Category:</label>
+            <select class="btn btn-outline-primary" th:field="*{category.categoryId}">
+                <option th:each="c : ${categories}"
+                        th:value="${c.getCategoryId()}"
+                        th:text="${c.getCategoryName()}">
+                </option>
+            </select>
+            <input type="submit" name="action" class="btn btn-outline-success" value="Add new"/>
+        </div>
+        <div class="modal-footer">
+            <input type="submit" name="action" class="btn btn-success" value="Save">
+        </div>
+    </form>
+</div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>List of blog</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <div class="dropdown">
+        <span><b>Category</b></span>
+        <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1"
+                data-bs-toggle="dropdown" aria-expanded="false" th:text="${category.categoryName}">
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1"
+            th:object="${categories}">
+            <li>
+                <a class="dropdown-item" th:href="@{/blog}" th:text="All"></a>
+            </li>
+            <li>
+                <a class="dropdown-item" th:each="c : ${categories}"
+                   th:href="@{/blog(id=${c.categoryId})}" th:text="${c.categoryName}"></a>
+            </li>
+        </ul>
+    </div>
+    <a th:if="${#request.userPrincipal != null}" th:href="@{/logout}">Logout</a>
+
+    <a th:if="${#request.userPrincipal == null}" th:href="@{/login}">Login</a>
+
+    <table class="table">
+        <thread>
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Title</th>
+                <th scope="col">Date</th>
+                <th scope="col">Category</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thread>
+        <tbody>
+        <tr class="col" th:each="blog, status : ${blogPage}">
+            <td th:text="${status.count}"></td>
+            <td th:text="${blog.title}"></td>
+            <td th:text="${blog.date}"></td>
+            <td th:text="${blog.category.categoryName}"></td>
+            <td><a th:href="@{/blog/detail/{id}(id=${blog.id})}">Detail</a></td>
+            <td><a th:href="@{/blog/delete/{id}(id=${blog.id})}">Delete</a></td>
+            <td><a th:href="@{/blog/edit/{id}(id=${blog.id})}">Edit</a></td>
+        </tr>
+        <tr>
+            <td colspan="6" th:if="${blogs.isEmpty()}" th:text="#{msgErr}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <a th:if="${blogPage.hasPrevious()}"
+           th:href="@{/blog(page=${blogPage.number - 1}, id=${category.categoryId})}">Previous</a>
+        <span th:text="|page ${blogPage.number+1} / ${blogPage.totalPages}|"></span>
+        <a th:if="${blogPage.hasNext()}"
+           th:href="@{/blog(page=${blogPage.number + 1}, id=${category.categoryId})}">Next</a>
+    </div>
+    <a th:href="@{/blog/add}">Add new blog</a>
+</div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>

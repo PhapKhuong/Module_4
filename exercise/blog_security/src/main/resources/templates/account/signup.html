@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <h3>Sign up</h3>
+    <p th:if="${msg!=null}" th:text="${msg}"></p>
+    <form th:object="${userDto}" th:action="@{/signup}" method="post">
+        <div class="mb-3">
+            <label th:for="username" class="col-form-label">Username:</label>
+            <input type="text" class="form-control" th:field="*{username}" th:id="username"/>
+        </div>
+
+        <div class="mb-3">
+            <label th:for="password" class="col-form-label">Password:</label>
+            <input type="text" class="form-control" th:field="*{password}" th:id="password"/>
+        </div>
+
+        <div class="mb-3">
+            <label th:for="role" class="col-form-label">Role:</label>
+            <input type="checkbox" name="role"
+                   th:each="r : ${roles}"
+                   th:value="${r.roleId}"
+                   th:text="${r.roleName}"/>
+        </div>
+        <div class="modal-footer">
+            <input type="submit" name="action" class="btn btn-success" value="Sign up">
+        </div>
+    </form>
+</div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>
