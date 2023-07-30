@@ -43,14 +43,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/j_spring_security_check")
                 .loginPage("/login")
                 .defaultSuccessUrl("/blog")
-                .failureUrl("/login?error=true")
+                .failureUrl("/login-error")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");
 
         http.authorizeRequests().and()
                 .rememberMe().tokenRepository(this.persistentTokenRepository())
-                .tokenValiditySeconds(24 * 60 * 60); //24H
+                .tokenValiditySeconds(24 * 60 * 60);
     }
 
     @Bean

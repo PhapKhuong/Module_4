@@ -55,7 +55,7 @@ function showBlogByCategory(categoryId) {
             } else {
                 btnStr += `<span content="${categoryId}" id="cId">${blogs.category.categoryName}</span>`;
             }
-            $("#dropdownMenuButton1").html(btnStr);
+            $("#navbarDropdown").html(btnStr);
         }
     })
 }
@@ -71,7 +71,7 @@ function showBlogByPage(step) {
     } else {
         page = +$("#current-page").text() + 1;
     }
-    console.log(page);
+
     $.ajax({
         contentType: "application/json",
         type: "GET",
@@ -99,6 +99,17 @@ function showBlogByPage(step) {
                 btnStr += `<span content="${categoryId}" id="cId">${blogs.category.categoryName}</span>`;
             }
             $("#dropdownMenuButton1").html(btnStr);
+        }
+    })
+}
+
+function initCreate(){
+    $.ajax({
+        contentType: "application/json",
+        type: "GET",
+        dataType: "json",
+        url: `http://localhost:8080/blogs/add`,
+        success: function () {
         }
     })
 }

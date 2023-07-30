@@ -2,16 +2,20 @@ package com.room.controller;
 
 import com.room.model.Payment;
 import com.room.model.Room;
+import com.room.model.dto.RoomDto;
 import com.room.service.itf.IPaymentService;
 import com.room.service.itf.IRoomService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +42,11 @@ public class RoomController {
         return new Room();
     }
 
+    @ModelAttribute("roomDto")
+    public RoomDto getRoomDto() {
+        return new RoomDto();
+    }
+
     @GetMapping("/show-room")
     public String displayRoom(@RequestParam Optional<Integer> page,
                               @RequestParam Optional<String> name,
@@ -58,9 +67,20 @@ public class RoomController {
         return "room/detail";
     }
 
+    @GetMapping("/add")
+    public String showAddForm() {
+        return "room/add";
+    }
+
     @PostMapping("/add")
-    public String addRoom(@ModelAttribute Room room,
+    public String addRoom(@ModelAttribute RoomDto roomDto,
+                          BindingResult bindingResult,
                           RedirectAttributes redirectAttributes) {
+        new RoomDto().validate(roomDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "room/add";
+        }
+
         List<Room> rooms = roomService.findList();
         List<Integer> roomIdAsInt = new ArrayList<>();
         for (Room r : rooms) {
@@ -82,15 +102,36 @@ public class RoomController {
         } else {
             roomId = "P-" + maxId;
         }
-        room.setRoomId(roomId);
+        roomDto.setRoomId(roomId);
+
+        Room room = new Room();
+        BeanUtils.copyProperties(roomDto, room);
+
         roomService.create(room);
         redirectAttributes.addFlashAttribute("msg", "Add new success!");
         return "redirect:/room/show-room";
     }
 
+    @GetMapping("/update/{id}")
+    public String showUpdateForm(@PathVariable String id,
+                                 Model model) {
+        Room updateRoom = roomService.findOne(id);
+        RoomDto roomDto = new RoomDto();
+        BeanUtils.copyProperties(updateRoom, roomDto);
+        model.addAttribute("roomDto", roomDto);
+        return "room/edit";
+    }
+
     @PostMapping("/update")
-    public String update(@ModelAttribute Room room,
+    public String update(@ModelAttribute RoomDto roomDto,
+                         BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
+        new RoomDto().validate(roomDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "room/edit";
+        }
+        Room room = new Room();
+        BeanUtils.copyProperties(roomDto, room);
         roomService.update(room);
         redirectAttributes.addFlashAttribute("msg", "Update success!");
         return "redirect:/room/show-room";
@@ -102,6 +143,21 @@ public class RoomController {
         Room delRoom = roomService.findOne(room.getRoomId());
         roomService.delete(delRoom);
         redirectAttributes.addFlashAttribute("msg", "Delete success!");
+        return "redirect:/room/show-room";
+    }
+
+    @PostMapping("/confirm")
+    public String confirmDel(@RequestParam("choose") String[] choose,
+                             RedirectAttributes redirectAttributes) {
+        int option = JOptionPane.showConfirmDialog(null,
+                "Are you sure?", "Delete selected records", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.OK_OPTION) {
+            for (String roomId : choose) {
+                Room delRoom = roomService.findOne(roomId);
+                roomService.delete(delRoom);
+            }
+            redirectAttributes.addFlashAttribute("msg", "Delete success!");
+        }
         return "redirect:/room/show-room";
     }
 }

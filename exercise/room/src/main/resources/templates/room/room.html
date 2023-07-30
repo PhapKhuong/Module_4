@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>List of room</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/room.css}">
 </head>
 <body>
 <div class="container">
@@ -23,64 +24,55 @@
     </nav>
 
     <h3>List of room</h3>
-    <p th:if="${msg!=null}" th:text="${msg}"></p>
-    <button
-            type="button"
-            class="btn btn-outline-success btn-sm"
-            data-bs-toggle="modal"
-            data-bs-target="#addRoomModal">
-        Add new room
-    </button>
-    <table class="table">
-        <thread>
-            <tr>
-                <th scope="col">Numerical</th>
-                <th scope="col">Name</th>
-                <th scope="col">Phone</th>
-                <th scope="col">Date</th>
-                <th scope="col">Payment</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+    <p class="msg-error" th:if="${msg!=null}" th:text="${msg}"></p>
+    <a class="btn btn-outline-success btn-sm" th:href="@{/room/add}">Add new room</a>
+    <form th:action="@{/room/confirm}" method="post">
+        <table class="table">
+            <thread>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Numerical</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Payment</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thread>
+            <tbody>
+            <tr class="col" th:each="room, status : ${roomPage}">
+                <td>
+                    <input type="checkbox" th:name="choose" th:value="${room.roomId}">
+                </td>
+                <td th:text="${status.count}"></td>
+                <td th:text="${room.roomName}"></td>
+                <td th:text="${room.phone}"></td>
+                <td th:text="${room.date}"></td>
+                <td th:text="${room.payment.paymentName}"></td>
+                <td>
+                    <a class="btn btn-primary btn-sm"
+                       th:href="@{/room/update/{id}(id=${room.roomId})}">Edit</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-sm" th:href="@{/room/detail/{id}(id=${room.roomId})}">Detail</a>
+                </td>
+                <td>
+                    <button
+                            type="button"
+                            class="btn btn-primary btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#delRoomModal"
+                            th:data-bs-roomId="${room.roomId}">
+                        Delete
+                    </button>
+                </td>
             </tr>
-        </thread>
-        <tbody>
-        <tr class="col" th:each="room, status : ${roomPage}">
-            <td th:text="${status.count}"></td>
-            <td th:text="${room.roomName}"></td>
-            <td th:text="${room.phone}"></td>
-            <td th:text="${room.date}"></td>
-            <td th:text="${room.payment.paymentName}"></td>
-            <td>
-                <button
-                        type="button"
-                        class="btn btn-primary btn-sm"
-                        data-bs-toggle="modal"
-                        data-bs-target="#editRoomModal"
-                        th:data-bs-roomId="${room.roomId}"
-                        th:data-bs-roomName="${room.roomName}"
-                        th:data-bs-phone="${room.phone}"
-                        th:data-bs-payment="${room.payment.paymentId}"
-                        th:data-bs-note="${room.note}">
-                    Edit
-                </button>
-            </td>
-            <td>
-                <a class="btn btn-primary btn-sm" th:href="@{/room/detail/{id}(id=${room.roomId})}">Detail</a>
-            </td>
-            <td>
-                <button
-                        type="button"
-                        class="btn btn-primary btn-sm"
-                        data-bs-toggle="modal"
-                        data-bs-target="#delRoomModal"
-                        th:data-bs-roomId="${room.roomId}">
-                    Delete
-                </button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        <input type="submit" class="btn btn-outline-success btn-sm" value="Delete ticked">
+    </form>
     <div>
         <a th:if="${roomPage.hasPrevious()}"
            th:href="@{/room/show-room(page=${roomPage.number - 1}, name=${name})}">Previous</a>
@@ -88,9 +80,6 @@
         <a th:if="${roomPage.hasNext()}"
            th:href="@{/room/show-room(page=${roomPage.number + 1}, name=${name})}">Next</a>
     </div>
-
-    <div th:replace="~{room/modalAddRoom::addRoom}"></div>
-    <div th:replace="~{room/modalEditRoom::editRoom}"></div>
     <div th:replace="~{room/modalDelRoom::delRoom}"></div>
 </div>
 </body>

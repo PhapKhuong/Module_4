@@ -7,15 +7,25 @@
 </head>
 <body>
 <div class="container">
-    <div class="dropdown">
-        <span><b>Category</b></span>
-        <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1"
-                data-bs-toggle="dropdown" aria-expanded="false">
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="category">
-        </ul>
-    </div>
-
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="category">
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <a class="btn btn-outline-success btn-sm">Add new blog</a>
     <table class="table">
         <thread>
             <tr>
@@ -31,13 +41,11 @@
         <tbody id="blogs">
         </tbody>
     </table>
-
     <div class="pagination">
         <button class="page-link" id="previous-page" onclick="showBlogByPage(this.id)">Previous</button>
         <span class="page-link" id="current-page"></span>
         <button class="page-link" id="page-next" onclick="showBlogByPage(this.id)">Next</button>
     </div>
-
 </div>
 </body>
 <script src="js/jquery-3.6.1.min.js"></script>

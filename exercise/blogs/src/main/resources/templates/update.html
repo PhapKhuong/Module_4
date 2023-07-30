@@ -27,8 +27,7 @@
             <select th:field="*{category.categoryId}">
                 <option th:each="category : ${categories}"
                         th:value="${category.getCategoryId()}"
-                        th:text="${category.getCategoryName()}"
-                        th:selected="${category.getCategoryName()}">
+                        th:text="${category.getCategoryName()}">
                 </option>
             </select>
         </div>

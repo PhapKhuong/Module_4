@@ -9,7 +9,6 @@ public class WebUtils {
     private WebUtils() {
     }
 
-    // sử dụng để trả về thông tin của user dưới dạng chuỗi
     public static String toString(User user) {
         StringBuilder sb = new StringBuilder();
         sb.append("Username: ").append(user.getUsername());

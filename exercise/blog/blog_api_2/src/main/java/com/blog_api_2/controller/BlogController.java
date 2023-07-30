@@ -1,7 +1,7 @@
 package com.blog_api_2.controller;
 
-import com.blog_api_2.dto.BlogDto;
-import com.blog_api_2.dto.BlogPageSearch;
+import com.blog_api_2.model.dto.BlogDto;
+import com.blog_api_2.model.dto.BlogPageSearch;
 import com.blog_api_2.model.Blog;
 import com.blog_api_2.model.Category;
 import com.blog_api_2.service.itf.IBlogService;
@@ -13,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -63,7 +65,7 @@ public class BlogController {
         if (blogPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            BlogPageSearch blogPageSearch =new BlogPageSearch(category, blogPage);
+            BlogPageSearch blogPageSearch = new BlogPageSearch(category, blogPage);
             return new ResponseEntity<>(blogPageSearch, HttpStatus.OK);
         }
     }
@@ -78,16 +80,30 @@ public class BlogController {
         }
     }
 
+    @GetMapping("/add")
+    public ResponseEntity<?> initCreate() {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     // DO THÊM MỚI CATEGORY NẰM TRÊN TRANG THÊM MỚI BLOG, NÊN TẠO RA MỘT FORM CÓ 2 NÚT SUBMIT,
     // MỘT NÚT CÓ ACTION "Add new", NẾU BẤM VÀO ĐÂY SẼ CHUYỂN QUA TRANG THÊM MỚI CATEGORY
     // VÀ KÈM THEO BLOG ĐÃ SOẠN ĐỂ KHI THÊM MỚI XONG SẼ KHÔNG CẦN SOẠN LẠI BLOG TRƯỚC ĐÓ NỮA.
     // CÒN NẾU BẤM VÀO NÚT SUBMIT CÒN LẠI THÌ ĐÓ LÀ THÊM MỚI BLOG.
     @PostMapping("/add")
     public ResponseEntity<?> create(@RequestParam String action,
-                                    @RequestBody BlogDto blogDto) {
+                                    @RequestBody BlogDto blogDto,
+                                    BindingResult result) {
         if (action.equals("Add new")) {
             return new ResponseEntity<>(blogDto, HttpStatus.OK);
         } else {
+            new BlogDto().validate(blogDto, result);
+            Map<String, String> errorMap = new HashMap<>();
+            if (result.hasErrors()) {
+                for (FieldError error : result.getFieldErrors()) {
+                    errorMap.put(error.getField(), error.getDefaultMessage());
+                }
+                return new ResponseEntity<>(errorMap, HttpStatus.OK);
+            }
             Blog blog = new Blog();
             BeanUtils.copyProperties(blogDto, blog);
             blogService.add(blog);
@@ -126,12 +142,23 @@ public class BlogController {
         if (blog == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(blog, HttpStatus.OK);
+            BlogDto blogDto = new BlogDto();
+            BeanUtils.copyProperties(blog, blogDto);
+            return new ResponseEntity<>(blogDto, HttpStatus.OK);
         }
     }
 
     @PatchMapping("/edit")
-    public ResponseEntity<?> update(@RequestBody BlogDto blogDto) {
+    public ResponseEntity<?> update(@RequestBody BlogDto blogDto,
+                                    BindingResult result) {
+        new BlogDto().validate(blogDto, result);
+        if (result.hasErrors()) {
+            Map<String, String> errorMap = new HashMap<>();
+            for (FieldError error : result.getFieldErrors()) {
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            }
+            return new ResponseEntity<>(errorMap, HttpStatus.OK);
+        }
         Blog blog = new Blog();
         BeanUtils.copyProperties(blogDto, blog);
         blogService.update(blog);

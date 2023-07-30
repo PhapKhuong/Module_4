@@ -7,14 +7,26 @@
 </head>
 <body>
 <div class="container">
-    <div class="dropdown">
-        <span><b>Category</b></span>
-        <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1"
-                data-bs-toggle="dropdown" aria-expanded="false">
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="category">
-        </ul>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <form method="get">
+                            <select class="form-control me-2" type="search" id="category"
+                                    onchange="showBlogByCategory()">
+                            </select>
+                        </form>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <a class="btn btn-outline-success btn-sm">Add new blog</a>
 
     <table class="table">
         <thread>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new blog</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <form action="/blog/add" method="post">
+        <div class="mb-3">
+            <label for="title" class="col-form-label">Title:</label>
+            <input type="text" class="form-control" name="title" id="title"/>
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="col-form-label">Content:</label>
+            <textarea cols="20" rows="15" class="form-control" id="content"></textarea>
+        </div>
+        <div class="mb-3">
+            <input type="hidden" class="form-control" id="date" name="date"/>
+        </div>
+        <div class="mb-3">
+            <label for="category" class="col-form-label">Category:</label>
+            <select class="btn btn-outline-primary" id="category">
+            </select>
+            <input type="submit" name="action" class="btn btn-outline-success" value="Add new"/>
+        </div>
+        <div class="modal-footer">
+            <input type="submit" name="action" class="btn btn-success" value="Save">
+        </div>
+    </form>
+</div>
+</body>
+<script src="js/jquery-3.6.1.min.js"></script>
+<script src="js/blog.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+</html>

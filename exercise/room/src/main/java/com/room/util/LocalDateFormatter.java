@@ -25,13 +25,8 @@ public class LocalDateFormatter implements Formatter<LocalDate> {
     }
 
     @Override
-    public LocalDate parse(String dateString, Locale locale) {
-        try {
-            return LocalDate.parse(dateString, dateFormatter);
-        } catch (DateTimeParseException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public LocalDate parse(String dateString, Locale locale) throws DateTimeParseException {
+        return LocalDate.parse(dateString, dateFormatter);
     }
 
     @Override

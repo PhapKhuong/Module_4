@@ -2,7 +2,7 @@ showCategory();
 showBlogByCategory();
 
 function showCategory() {
-    let categoryStr = '<li id="0" onclick="showBlogByCategory(this.id)" class="dropdown-item">All</li>';
+    let categoryStr = '<option value="0" class="dropdown-item"/>All';
     $.ajax({
         contentType: "application/json",
         type: "GET",
@@ -11,23 +11,22 @@ function showCategory() {
         success: function (categories) {
             for (let i = 0; i < categories.length; i++) {
                 categoryStr +=
-                    `<li id="${categories[i].categoryId}" onclick="showBlogByCategory(this.id)" class="dropdown-item">
-                    ${categories[i].categoryName}</li>`;
+                    `<option value="${categories[i].categoryId}" class="dropdown-item"/>
+                    ${categories[i].categoryName}`;
             }
             $("#category").html(categoryStr);
         }
     })
 }
 
-function showBlogByCategory(categoryId) {
+function showBlogByCategory() {
     let blogsStr = '';
-    let btnStr = '';
     let page = 0;
     let id;
-    if (!categoryId) {
+    if (!$("#category").val()) {
         id = 0;
     } else {
-        id = categoryId;
+        id = $("#category").val();
     }
     $.ajax({
         contentType: "application/json",
@@ -49,22 +48,13 @@ function showBlogByCategory(categoryId) {
             }
             $("#blogs").html(blogsStr);
             $("#current-page").text(page);
-            if (blogs.category === null) {
-                btnStr += `<span content="0" id="cId">All</span>`;
-
-            } else {
-                btnStr += `<span content="${categoryId}" id="cId">${blogs.category.categoryName}</span>`;
-            }
-            $("#dropdownMenuButton1").html(btnStr);
         }
     })
 }
 
 function showBlogByPage(step) {
     let blogsStr = '';
-    let btnStr = '';
-    let e = document.getElementById("cId");
-    let id = e.getAttribute("content");
+    let id = $("#category").val();
     let page;
     if (step === "previous-page") {
         page = +$("#current-page").text() - 1;
@@ -92,13 +82,6 @@ function showBlogByPage(step) {
             }
             $("#blogs").html(blogsStr);
             $("#current-page").text(page);
-            if (blogs.category === null) {
-                btnStr += `<span content="0" id="cId">All</span>`;
-
-            } else {
-                btnStr += `<span content="${categoryId}" id="cId">${blogs.category.categoryName}</span>`;
-            }
-            $("#dropdownMenuButton1").html(btnStr);
         }
     })
 }

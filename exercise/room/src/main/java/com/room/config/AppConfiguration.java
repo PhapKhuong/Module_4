@@ -9,8 +9,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 public class AppConfiguration extends WebMvcConfigurerAdapter {
-    private String datePattern = "yyyy-MM-dd";
-    private String dateTimePattern = "yyyy-MM-dd HH:mm:ss";
+    private String datePattern = "dd-MM-yyyy";
+    private String dateTimePattern = "dd-MM-yyyy HH:mm:ss";
 
     @Bean
     LocalDateFormatter localDateFormatter() {

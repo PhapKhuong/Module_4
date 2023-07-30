@@ -11,8 +11,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface IRoomRepository extends JpaRepository<Room, String> {
-    @Query(value = RoomQuery.SELECT_PAGE_ROOM_BY_NAME, nativeQuery = true)
-    Page<Room> findRoomPage(Pageable pageable, @Param("room_name") String roomName);
+    @Query(value = RoomQuery.SELECT_PAGE_ROOM, nativeQuery = true)
+    Page<Room> findRoomPage(Pageable pageable,
+                            @Param("input") String input);
 
     @Query(value = RoomQuery.SELECT_LIST_ROOM, nativeQuery = true)
     List<Room> findRoomList();

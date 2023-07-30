@@ -70,11 +70,11 @@ public class AccountController {
         return "account/login";
     }
 
-    @GetMapping("/login?error=true")
+    @GetMapping("/login-error")
     public String loginError(Model model) {
         String msg = "Login fail!";
         model.addAttribute("msg", msg);
-        return "account/login";
+        return "account/login-error";
     }
 
     @GetMapping("/403")
