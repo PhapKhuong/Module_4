@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>List of employee</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/furama.css}">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <div th:replace="~{layout::menu}"></div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+                <form class="d-flex" th:action="@{/employee}" method="get">
+                    <input class="form-control me-2" type="search"
+                           name="name" th:value="${name}"
+                           placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <h3>List of employee</h3>
+    <a class="btn btn-outline-success btn-sm" th:href="@{/employee/add}">Add new employee</a>
+    <table class="table">
+        <thread>
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Name</th>
+                <th scope="col">Birthday</th>
+                <th scope="col">Card's ID</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Address</th>
+                <th scope="col">Position</th>
+                <th scope="col">Division</th>
+            </tr>
+        </thread>
+        <tbody>
+        <tr class="col" th:each="e, status : ${employeePage}">
+            <td th:text="${status.count}"></td>
+            <td th:text="${e.employeeName}"></td>
+            <td th:text="${e.employeeBirthday}"></td>
+            <td th:text="${e.employeeIdCard}"></td>
+            <td th:text="${e.employeePhone}"></td>
+            <td th:text="${e.employeeEmail}"></td>
+            <td th:text="${e.employeeAddress}"></td>
+            <td th:text="${e.position.positionName}"></td>
+            <td th:text="${e.division.divisionName}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <a th:if="${employeePage.hasPrevious()}"
+           th:href="@{/employee(page=${employeePage.number - 1}, name=${name})}">Previous</a>
+        <span th:text="|page ${employeePage.number+1} / ${employeePage.totalPages}|"></span>
+        <a th:if="${employeePage.hasNext()}"
+           th:href="@{/employee(page=${employeePage.number + 1}, name=${name})}">Next</a>
+    </div>
+</div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>

@@ -1,52 +1,27 @@
-package com.furama.model;
+package com.furama.model.dto;
 
-import javax.persistence.*;
+import com.furama.model.CustomerType;
+import com.furama.regex.FRegex;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+
 import java.time.LocalDate;
-import java.util.Set;
 
-@Entity
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CustomerDto implements Validator {
     private String customerId;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_type_id", referencedColumnName = "customerTypeId")
     private CustomerType customerType;
-
-    @Column(name = "customer_name")
     private String customerName;
-    @Column(name = "customer_birthday")
     private LocalDate customerBirthday;
-    @Column(name = "customer_gender")
     private boolean customerGender;
-    @Column(name = "customer_id_card")
     private String customerIdCard;
-    @Column(name = "customer_phone")
     private String customerPhone;
-    @Column(name = "customer_email")
     private String customerEmail;
-    @Column(name = "customer_address")
     private String customerAddress;
 
-    @OneToMany(mappedBy = "customer")
-    private Set<Contract> contractSet;
-
-    public Customer() {
+    public CustomerDto() {
     }
 
-    public Customer(CustomerType customerType, String customerName, LocalDate customerBirthday, boolean customerGender, String customerIdCard, String customerPhone, String customerEmail, String customerAddress) {
-        this.customerType = customerType;
-        this.customerName = customerName;
-        this.customerBirthday = customerBirthday;
-        this.customerGender = customerGender;
-        this.customerIdCard = customerIdCard;
-        this.customerPhone = customerPhone;
-        this.customerEmail = customerEmail;
-        this.customerAddress = customerAddress;
-    }
-
-    public Customer(String customerId, CustomerType customerType, String customerName, LocalDate customerBirthday, boolean customerGender, String customerIdCard, String customerPhone, String customerEmail, String customerAddress, Set<Contract> contractSet) {
+    public CustomerDto(String customerId, CustomerType customerType, String customerName, LocalDate customerBirthday, boolean customerGender, String customerIdCard, String customerPhone, String customerEmail, String customerAddress) {
         this.customerId = customerId;
         this.customerType = customerType;
         this.customerName = customerName;
@@ -56,7 +31,6 @@ public class Customer {
         this.customerPhone = customerPhone;
         this.customerEmail = customerEmail;
         this.customerAddress = customerAddress;
-        this.contractSet = contractSet;
     }
 
     public String getCustomerId() {
@@ -131,11 +105,29 @@ public class Customer {
         this.customerAddress = customerAddress;
     }
 
-    public Set<Contract> getContractSet() {
-        return contractSet;
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
     }
 
-    public void setContractSet(Set<Contract> contractSet) {
-        this.contractSet = contractSet;
+    @Override
+    public void validate(Object target, Errors errors) {
+        CustomerDto customerDto = (CustomerDto) target;
+
+        if(!customerDto.getCustomerId().matches(FRegex.REGEX_CUSTOMER_ID)){
+            errors.rejectValue("customerId", null, "Customer ID is not formatted correctly!");
+        }
+
+        if(!customerDto.getCustomerIdCard().matches(FRegex.REGEX_ID_NUMBER)){
+            errors.rejectValue("customerIdCard", null, "ID card is not formatted correctly!");
+        }
+
+        if(!customerDto.getCustomerPhone().matches(FRegex.REGEX_PHONE)){
+            errors.rejectValue("customerPhone", null, "Phone is not formatted correctly!");
+        }
+
+        if(!customerDto.getCustomerEmail().matches(FRegex.REGEX_EMAIL)){
+            errors.rejectValue("customerEmail", null, "Email is not formatted correctly!");
+        }
     }
 }

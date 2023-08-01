@@ -26,7 +26,7 @@
     <h3>List of room</h3>
     <p class="msg-error" th:if="${msg!=null}" th:text="${msg}"></p>
     <a class="btn btn-outline-success btn-sm" th:href="@{/room/add}">Add new room</a>
-    <form th:action="@{/room/confirm}" method="post">
+    <form th:action="@{/room/delete-many}" method="post">
         <table class="table">
             <thread>
                 <tr>

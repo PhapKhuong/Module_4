@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>List of customer</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/furama.css}">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <div th:replace="~{layout::menu}"></div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+                <form class="d-flex" th:action="@{/customer}" method="get">
+                    <input class="form-control me-2" type="search"
+                           name="name" th:value="${name}"
+                           placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <h3>List of customer</h3>
+    <a class="btn btn-outline-success btn-sm" th:href="@{/customer/add}">Add new customer</a>
+    <table class="table">
+        <thread>
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Name</th>
+                <th scope="col">Birthday</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Card's ID</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Address</th>
+                <th scope="col">Type</th>
+            </tr>
+        </thread>
+        <tbody>
+        <tr class="col" th:each="c, status : ${customerPage}">
+            <td th:text="${status.count}"></td>
+            <td th:text="${c.customerName}"></td>
+            <td th:text="${c.customerBirthday}"></td>
+            <td th:if="${c.customerGender}" th:text="Men"></td>
+            <td th:if="${!c.customerGender}" th:text="Women"></td>
+            <td th:text="${c.customerIdCard}"></td>
+            <td th:text="${c.customerPhone}"></td>
+            <td th:text="${c.customerEmail}"></td>
+            <td th:text="${c.customerAddress}"></td>
+            <td th:text="${c.customerType.customerTypeName}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <a th:if="${customerPage.hasPrevious()}"
+           th:href="@{/customer(page=${customerPage.number - 1}, name=${name})}">Previous</a>
+        <span th:text="|page ${customerPage.number+1} / ${customerPage.totalPages}|"></span>
+        <a th:if="${customerPage.hasNext()}"
+           th:href="@{/customer(page=${customerPage.number + 1}, name=${name})}">Next</a>
+    </div>
+</div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</html>

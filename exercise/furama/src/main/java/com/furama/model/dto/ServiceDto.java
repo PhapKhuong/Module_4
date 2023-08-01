@@ -1,47 +1,28 @@
-package com.furama.model;
+package com.furama.model.dto;
 
-import javax.persistence.*;
-import java.util.Set;
+import com.furama.model.RentType;
+import com.furama.model.ServiceType;
+import com.furama.regex.FRegex;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
-@Entity
-public class Service {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ServiceDto implements Validator {
     private String serviceId;
-
-    @Column(name = "service_name")
     private String serviceName;
-    @Column(name = "service_area")
     private int serviceArea;
-    @Column(name = "service_cost")
     private double serviceCost;
-    @Column(name = "service_max_people")
     private int serviceMaxPeople;
-
-    @ManyToOne
-    @JoinColumn (name = "rent_type_id", referencedColumnName = "rentTypeId")
     private RentType rentType;
-
-    @ManyToOne
-    @JoinColumn (name = "service_type_id", referencedColumnName = "serviceTypeId")
     private ServiceType serviceType;
-
-    @OneToMany(mappedBy = "service")
-    private Set<Contract> contractSet;
-
-    @Column(name = "standard_room")
     private String standardRoom;
-    @Column(name = "description_other_convenience")
     private String descriptionOtherConvenience;
-    @Column(name = "pool_area")
     private double poolArea;
-    @Column(name = "number_of_floors")
     private int numberOfFloors;
 
-    public Service() {
+    public ServiceDto() {
     }
 
-    public Service(String serviceId, String serviceName, int serviceArea, double serviceCost, int serviceMaxPeople, RentType rentType, ServiceType serviceType, Set<Contract> contractSet, String standardRoom, String descriptionOtherConvenience, double poolArea, int numberOfFloors) {
+    public ServiceDto(String serviceId, String serviceName, int serviceArea, double serviceCost, int serviceMaxPeople, RentType rentType, ServiceType serviceType, String standardRoom, String descriptionOtherConvenience, double poolArea, int numberOfFloors) {
         this.serviceId = serviceId;
         this.serviceName = serviceName;
         this.serviceArea = serviceArea;
@@ -49,7 +30,6 @@ public class Service {
         this.serviceMaxPeople = serviceMaxPeople;
         this.rentType = rentType;
         this.serviceType = serviceType;
-        this.contractSet = contractSet;
         this.standardRoom = standardRoom;
         this.descriptionOtherConvenience = descriptionOtherConvenience;
         this.poolArea = poolArea;
@@ -112,14 +92,6 @@ public class Service {
         this.serviceType = serviceType;
     }
 
-    public Set<Contract> getContractSet() {
-        return contractSet;
-    }
-
-    public void setContractSet(Set<Contract> contractSet) {
-        this.contractSet = contractSet;
-    }
-
     public String getStandardRoom() {
         return standardRoom;
     }
@@ -150,5 +122,39 @@ public class Service {
 
     public void setNumberOfFloors(int numberOfFloors) {
         this.numberOfFloors = numberOfFloors;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        ServiceDto serviceDto = (ServiceDto) target;
+
+        if (!serviceDto.getServiceId().matches(FRegex.REGEX_SERVICE_ID)) {
+            errors.rejectValue("serviceId", null, "Service ID is not formatted correctly!");
+        }
+
+        if (serviceDto.getServiceArea() <= 0) {
+            errors.rejectValue("serviceArea", null, "Service area is more than 0");
+        }
+
+        if (serviceDto.getServiceCost() <= 0) {
+            errors.rejectValue("serviceCost", null, "Service cost is more than 0");
+        }
+
+        if (serviceDto.getServiceMaxPeople() <= 0) {
+            errors.rejectValue("serviceMaxPeople", null, "Max people is more than 0");
+        }
+
+        if (serviceDto.getPoolArea() <= 0) {
+            errors.rejectValue("poolArea", null, "Pool area is more than 0");
+        }
+
+        if (serviceDto.getNumberOfFloors() <= 0) {
+            errors.rejectValue("numberOfFloors", null, "Number of floor is more than 0");
+        }
     }
 }

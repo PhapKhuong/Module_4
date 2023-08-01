@@ -146,7 +146,7 @@ public class RoomController {
         return "redirect:/room/show-room";
     }
 
-    @PostMapping("/confirm")
+    @PostMapping("/delete-many")
     public String confirmDel(@RequestParam("choose") String[] choose,
                              RedirectAttributes redirectAttributes) {
         int option = JOptionPane.showConfirmDialog(null,
